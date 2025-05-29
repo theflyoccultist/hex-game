@@ -5,7 +5,8 @@
   - ✔ Draw a dynamic Hex board
   - ✔ Take user input for board size and validate it
   - Validate legal moves
-  - Check for winning conditions
+  - Check for winning conditions.
+
 *At this phase, the game will be player as a human vs. human game.*
 
 - Second step: `hex_board_evil_ai.cpp`
