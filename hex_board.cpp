@@ -35,7 +35,7 @@ std::ostream &operator<<(std::ostream &os, CellState state) {
   return os;
 }
 
-// Board::Board initializes every cells to . (CellState::EMPTY)
+// Board::Board initializes every cell to . (CellState::EMPTY)
 class Board {
 public:
   Board(int size)
@@ -56,7 +56,6 @@ public:
 private:
   int board_size;
   std::vector<std::vector<CellState>> cells;
-  std::string line;
 };
 
 // Check for neighbors in the surrounding points, add them to the returned
@@ -76,12 +75,13 @@ std::vector<Point> Board::get_neighbors(int x, int y) {
   return neighbors;
 }
 
+// pure hell
 bool Board::check_win(CellState player) {
   std::stack<Point> stack;
   std::vector<std::vector<bool>> visited(board_size,
                                          std::vector<bool>(board_size, false));
 
-  // add the player's cells to the stack (P1: Y axis, P2: X axis)
+  // add the player's cells to the stack (P1: X axis, P2: Y axis)
   for (int i = 0; i < board_size; ++i) {
     if (player == CellState::P1 && cells[i][0] == player)
       stack.push({i, 0});
