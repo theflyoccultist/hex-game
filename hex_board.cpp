@@ -184,6 +184,8 @@ void play_game(int board_size) {
       continue;
     }
 
+    game_board.add_point(x, y, current_player);
+
     if (game_board.check_win(current_player)) {
       game_board.print_board();
       std::cout << "Player"
