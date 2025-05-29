@@ -47,6 +47,8 @@ public:
       cells[x][y] = state;
   }
 
+  bool is_empty(int x, int y) const { return cells[x][y] == CellState::EMPTY; }
+
   std::vector<Point> get_neighbors(int x, int y);
   bool check_win(CellState player);
   void print_board();
@@ -115,7 +117,6 @@ bool Board::check_win(CellState player) {
 
 // Display the hex board to the terminal
 void Board::print_board() {
-  std::cout << "a is for Player 1, b is for Player 2.\n";
   std::string indent = "";
   std::string line = "\\";
   for (int i = 1; i < board_size; ++i)
@@ -123,7 +124,7 @@ void Board::print_board() {
 
   std::cout << " 0";
   for (int i = 1; i < board_size; ++i)
-    std::cout << " a " << i;
+    std::cout << " y " << i;
   std::cout << "\n";
 
   std::cout << "0 " << cells[0][0];
@@ -133,7 +134,7 @@ void Board::print_board() {
 
   for (int i = 1; i < board_size; ++i) {
     indent += ' ';
-    std::cout << indent << "b " << line << "\n";
+    std::cout << indent << "x " << line << "\n";
     if (i < 10) {
       indent += ' ';
       std::cout << indent << i << ' ' << cells[i][0];
@@ -148,12 +149,12 @@ void Board::print_board() {
   }
 };
 
-// validate user input
-int get_valid_num() {
+// block invalid input - reusable function
+int get_valid_num(int min, int max, const std::string &prompt) {
   int value;
   while (true) {
-    std::cout << "Please input a board size between 5 and 12: ";
-    if (std::cin >> value && value >= 5 && value <= 12) {
+    std::cout << prompt;
+    if (std::cin >> value && value >= min && value <= max) {
       return value;
     } else {
       std::cin.clear();
@@ -163,19 +164,42 @@ int get_valid_num() {
   }
 }
 
-void play_game() {
+// main function to execute the game
+void play_game(int board_size) {
+  std::cout << "Rules:\nPlayer 1: conquer the y axis!\nPlayer 2: conquer the x "
+               "axis!\n";
+  Board game_board(board_size);
+  CellState current_player = CellState::P1;
+
   while (true) {
-    std::cout << "(Player 1/2) input coordinates :";
-    if (check_win) {
-      std::cout << "Player 1 / 2 has won!\n";
+    game_board.print_board();
+    std::cout << "Player "
+              << (current_player == CellState::P1 ? "1 (X)" : "2 (0)")
+              << ", it's your move.\n";
+    int x = get_valid_num(0, board_size - 1, "Enter X: ");
+    int y = get_valid_num(0, board_size - 1, "Enter Y: ");
+
+    if (!game_board.is_empty(x, y)) {
+      std::cout << "Cell is already taken. Try again.\n";
+      continue;
+    }
+
+    if (game_board.check_win(current_player)) {
+      game_board.print_board();
+      std::cout << "Player"
+                << (current_player == CellState::P1 ? "1 (X)" : "2 (0)")
+                << " has won!\n";
       break;
     }
+
+    // Swap turns
+    current_player =
+        (current_player == CellState::P1) ? CellState::P2 : CellState::P1;
   }
 }
 
 int main() {
-  int n = get_valid_num();
-  Board game_board(n);
-  game_board.print_board();
+  int n = get_valid_num(5, 12, "Please input a board size between 5 and 12: ");
+  play_game(n);
   return 0;
 }
