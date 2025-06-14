@@ -248,8 +248,8 @@ int get_valid_num(int min, int max, const std::string &prompt) {
 
 // main function to execute the game
 void play_game(int board_size) {
-  std::cout << "Rules:\nPlayer 1: conquer the x axis!\nAI: conquer the y "
-               "axis!\n";
+  std::cout << "Rules:\nPlayer 1: conquer the horizontal axis!\nAI: conquer "
+               "the vertical axis!\n";
   Board game_board(board_size);
   CellState current_player = CellState::P1;
   GameAI ai_player;

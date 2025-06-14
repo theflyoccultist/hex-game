@@ -1,6 +1,8 @@
 # hex-game
 ### Terminal Based hex-game with optional AI opponent.
 
+![preview](preview.png)
+
 - Phase 1: `hex_board.cpp`
   - Draw a dynamic Hex board
   - Take user input for board size and validate it

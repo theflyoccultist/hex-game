@@ -166,8 +166,8 @@ int get_valid_num(int min, int max, const std::string &prompt) {
 
 // main function to execute the game
 void play_game(int board_size) {
-  std::cout << "Rules:\nPlayer 1: conquer the x axis!\nPlayer 2: conquer the y "
-               "axis!\n";
+  std::cout << "Rules:\nPlayer 1: conquer the horizontal axis!\nPlayer 2: "
+               "conquer the vertical axis!\n";
   Board game_board(board_size);
   CellState current_player = CellState::P1;
 
